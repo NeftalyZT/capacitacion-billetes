@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitación Billetes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Capacitación: Detectar Billetes Falsos</h1>
+        <p>Aprende a identificar billetes falsos con ejercicios prácticos y pistas visuales.</p>
+    </header>
+
+    <main>
+        <section class="exercise">
+            <h2>Ejercicio rápido</h2>
+            <p>Observa el billete y decide si es verdadero o falso:</p>
+            <img id="bill" src="" alt="Billete" />
+            <div class="buttons">
+                <button onclick="checkAnswer(true)">Verdadero</button>
+                <button onclick="checkAnswer(false)">Falso</button>
+            </div>
+            <p id="result"></p>
+            <p id="hint"></p>
+            <button onclick="nextBill()" id="nextBtn">Siguiente billete</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Capacitación Cajeros</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
