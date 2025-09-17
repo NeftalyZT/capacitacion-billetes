@@ -3,34 +3,898 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capacitación Billetes</title>
-    <link rel="stylesheet" href="style.css">
+    <title>FinCap - Plataforma de Capacitación</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0d2b4b;
+            --secondary: #1a4d80;
+            --accent: #FF6B00;
+            --light: #f8f9fa;
+            --dark: #152635;
+            --success: #28a745;
+            --danger: #dc3545;
+            --text-dark: #2d3748;
+            --text-light: #e9ecef;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .navbar {
+            background-color: var(--primary);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: white !important;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background-color: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(13, 43, 75, 0.85), rgba(13, 43, 75, 0.95)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3') center/cover no-repeat;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            padding: 12px 28px;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e55f00;
+            border-color: #e55f00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .course-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 100%;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            border-bottom: none;
+        }
+        
+        .module-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .module-list li {
+            padding: 12px 15px;
+            border-left: 3px solid var(--secondary);
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .module-list li:hover {
+            background-color: #e9ecef;
+        }
+        
+        .footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 40px 0;
+            margin-top: auto;
+        }
+        
+        /* Juegos educativos */
+        .game-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 25px 0;
+            font-size: 1.1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            min-width: 100px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .btn-game {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 5px;
+            border-radius: 8px;
+        }
+        
+        .btn-true {
+            background-color: var(--success);
+            color: white;
+            border: none;
+        }
+        
+        .btn-false {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+        }
+        
+        .result-feedback {
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+        
+        .correct {
+            background-color: rgba(40, 167, 69, 0.15);
+            color: var(--success);
+            border: 2px solid var(--success);
+        }
+        
+        .incorrect {
+            background-color: rgba(220, 53, 69, 0.15);
+            color: var(--danger);
+            border: 2px solid var(--danger);
+        }
+        
+        .game-hint {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent);
+            display: none;
+        }
+        
+        .security-feature {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .security-feature:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-right: 15px;
+        }
+        
+        /* Juego de Arqueo de Caja */
+        .cash-counting {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .cash-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .cash-total {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 8px;
+        }
+        
+        /* Juego de Lavado de Activos */
+        .scenario-game {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .scenario {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .progress-container {
+            height: 30px;
+            background-color: #e9ecef;
+            border-radius: 15px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 15px;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Capacitación: Detectar Billetes Falsos</h1>
-        <p>Aprende a identificar billetes falsos con ejercicios prácticos y pistas visuales.</p>
-    </header>
-
-    <main>
-        <section class="exercise">
-            <h2>Ejercicio rápido</h2>
-            <p>Observa el billete y decide si es verdadero o falso:</p>
-            <img id="bill" src="" alt="Billete" />
-            <div class="buttons">
-                <button onclick="checkAnswer(true)">Verdadero</button>
-                <button onclick="checkAnswer(false)">Falso</button>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                
+                <div class="logo">
+                    <img src="img/logo.png" alt="Logo FinCap" style="height: 40px;">
+                </div>
+                FinCap
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#cursos">Cursos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#juegos">Juegos</a></li>
+        
+                </ul>
+                <div>
+                    
+                </div>
             </div>
-            <p id="result"></p>
-            <p id="hint"></p>
-            <button onclick="nextBill()" id="nextBtn">Siguiente billete</button>
-        </section>
-    </main>
+        </div>
+    </nav>
 
-    <footer>
-        <p>© 2025 Capacitación Cajeros</p>
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold mb-4">Capacitación en Gestión de Caja</h1>
+                    <p class="lead mb-4">Desarrolla habilidades expertas en manejo de efectivo, reconocimiento de billetes y prevención de lavado de activos para empresas de Cusco</p>
+                    
+                    <a href="#cursos" class="btn btn-outline-light btn-lg">Ver Cursos</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cursos Section -->
+    <section id="cursos" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Programa de Capacitación 2025</h2>
+            <div class="row g-4">
+                <!-- Curso 1 -->
+                <div class="col-md-4">
+                    <div class="card course-card">
+                        <div class="card-header">Módulo 1</div>
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: var(--primary);">Gestión Efectiva de Caja</h5>
+                            <p class="card-text">Aprende las mejores prácticas para el manejo de efectivo en entornos empresariales.</p>
+                            <ul class="module-list">
+                                <li>Control de ingresos y egresos</li>
+                                <li>Manejo de arqueo de caja</li>
+                                <li>Conciliación bancaria</li>
+                                <li>Gestión de flujo de efectivo</li>
+                            </ul>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary" onclick="showGame('cashGame')">Juego: Arqueo de Caja</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Curso 2 -->
+                <div class="col-md-4">
+                    <div class="card course-card">
+                        <div class="card-header">Módulo 2</div>
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: var(--primary);">Reconocimiento de Billetes Auténticos</h5>
+                            <p class="card-text">Técnicas para identificar billetes falsos y medidas de seguridad en el manejo de efectivo.</p>
+                            <ul class="module-list">
+                                <li>Elementos de seguridad de billetes</li>
+                                <li>Uso de equipos detectores</li>
+                                <li>Procedimiento ante billetes falsos</li>
+                                <li>Actualización 2025</li>
+                            </ul>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary" onclick="showGame('billGame')">Juego: Detección de Billetes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Curso 3 -->
+                <div class="col-md-4">
+                    <div class="card course-card">
+                        <div class="card-header">Módulo 3</div>
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: var(--primary);">Prevención de Lavado de Activos</h5>
+                            <p class="card-text">Conoce las regulaciones y procedimientos para prevenir operaciones financieras ilícitas.</p>
+                            <ul class="module-list">
+                                <li>Marco legal peruano</li>
+                                <li>Identificación de operaciones sospechosas</li>
+                                <li>Obligaciones de reporte</li>
+                                <li>Casos prácticos reales</li>
+                            </ul>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary" onclick="showGame('launderingGame')">Juego: Scenarios de Prevención</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Juegos Educativos Section -->
+    <section id="juegos" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Juegos Educativos</h2>
+            
+            <!-- Juego de Detección de Billetes -->
+            <div id="billGame" class="game-container">
+                <h3 class="text-center mb-4">Detección de Billetes Falsos</h3>
+                <p class="text-center">Observa atentamente el billete y determina si es auténtico o falso.</p>
+                
+                <div class="game-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="score">0</div>
+                        <div>Puntuación</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="round">1/6</div>
+                        <div>Ronda</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="correct">0</div>
+                        <div>Correctas</div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <img id="billImage" class="img-fluid rounded shadow" src="" alt="Billete para verificar" style="max-height: 280px;">
+                </div>
+                
+                <div id="resultFeedback" class="result-feedback" style="display: none;"></div>
+                <div id="gameHint" class="game-hint" style="display: none;"></div>
+                
+                <div class="text-center mt-4">
+                    <button id="btnTrue" class="btn btn-game btn-true" onclick="checkBillAnswer(true)">Verdadero</button>
+                    <button id="btnFalse" class="btn btn-game btn-false" onclick="checkBillAnswer(false)">Falso</button>
+                    <button id="nextBtn" class="btn btn-game btn-primary" onclick="nextBill()" style="display: none;">Siguiente Billete</button>
+                </div>
+                
+                <div class="mt-5">
+                    <h4>Elementos de Seguridad a Considerar:</h4>
+                    <div class="security-feature">
+                        <h5><i class="fas fa-check-circle feature-icon"></i> Marca de agua</h5>
+                        <p class="mb-0">Al trasluz, debe verse una imagen idéntica al personaje principal del billete.</p>
+                    </div>
+                    <div class="security-feature">
+                        <h5><i class="fas fa-check-circle feature-icon"></i> Hilo de seguridad</h5>
+                        <p class="mb-0">Debe ser visible como una línea oscura al trasluz y mostrar microtexto.</p>
+                    </div>
+                    <div class="security-feature">
+                        <h5><i class="fas fa-check-circle feature-icon"></i> Relief o tacto</h5>
+                        <p class="mb-0">Las áreas impresas en relieve deben sentirse al tacto, especialmente en los números.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Juego de Arqueo de Caja -->
+            <div id="cashGame" class="game-container" style="display: none;">
+                <h3 class="text-center mb-4">Arqueo de Caja</h3>
+                <p class="text-center">Calcula el total de efectivo en base a los billetes y monedas mostrados.</p>
+                
+                <div class="game-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="cashScore">0</div>
+                        <div>Puntuación</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="cashRound">1/5</div>
+                        <div>Ronda</div>
+                    </div>
+                </div>
+                
+                <div class="cash-counting">
+                    <h4 class="text-center mb-4">Conteo de Efectivo</h4>
+                    <div id="cashItems"></div>
+                    <div class="cash-total">
+                        <p>Total calculado: S/ <span id="totalValue">0.00</span></p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary me-2" onclick="calculateTotal()">Calcular Total</button>
+                        <button class="btn btn-success" onclick="checkCashAnswer()">Verificar</button>
+                    </div>
+                    
+                    <div id="cashResult" class="result-feedback" style="display: none;"></div>
+                </div>
+            </div>
+            
+            <!-- Juego de Prevención de Lavado de Activos -->
+            <div id="launderingGame" class="game-container" style="display: none;">
+                <h3 class="text-center mb-4">Prevención de Lavado de Activos</h3>
+                <p class="text-center">Identifica si los siguientes escenarios representan posibles operaciones de lavado de activos.</p>
+                
+                <div class="game-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="launderingScore">0</div>
+                        <div>Puntuación</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="launderingRound">1/5</div>
+                        <div>Ronda</div>
+                    </div>
+                </div>
+                
+                <div class="scenario-game">
+                    <div id="currentScenario" class="scenario">
+                        <h5>Escenario</h5>
+                        <p id="scenarioText"></p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button class="btn btn-game btn-true" onclick="checkScenarioAnswer(true)">Sospechoso</button>
+                        <button class="btn btn-game btn-false" onclick="checkScenarioAnswer(false)">Normal</button>
+                    </div>
+                    
+                    <div id="scenarioResult" class="result-feedback" style="display: none;"></div>
+                    <div id="scenarioExplanation" class="game-hint" style="display: none;"></div>
+                </div>
+                
+                <div class="progress-container mt-4">
+                    <div id="progressBar" class="progress-bar" style="width: 0%;">0%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>CashAcademy</h5>
+                    <p>Plataforma de capacitación especializada para empresas formales de Cusco. Programa 2025.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Contacto</h5>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Cusco, Perú</p>
+                    <p><i class="fas fa-envelope me-2"></i> info@cashacademy.edu.pe</p>
+                    <p><i class="fas fa-phone me-2"></i> +51 984 123 456</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-light"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <p class="text-center mb-0">&copy; 2025 CashAcademy - Todos los derechos reservados</p>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Bootstrap & jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // ===== JUEGO DE DETECCIÓN DE BILLETES =====
+        const bills = [
+            {
+                image: "img/billete10real.jpg",
+                isReal: true,
+                hint: "Billete auténtico: marca de agua visible, hilo de seguridad intacto, colores vibrantes."
+            },
+            {
+                image: "img/billete10falso.png",
+                isReal: false,
+                hint: "Billete falso: falta el hilo de seguridad, colores apagados, textura incorrecta."
+            },
+            {
+                image: "img/billete20real.png",
+                isReal: true,
+                hint: "Billete auténtico: relieve perceptible al tacto, elementos de seguridad bien definidos."
+            },
+            {
+                image: "img/billete20falso.jpg",
+                isReal: false,
+                hint: "Billete falso: números de serie inconsistentes, falta de detalles finos."
+            },
+            {
+                image: "img/billete50real.png",
+                isReal: true,
+                hint: "Billete auténtico: tinta que cambia de color al inclinarlo, microtexto legible."
+            },
+            {
+                image: "img/billetes50falso.jpg",    
+                isReal: false,
+                hint: "Billete falso: papel de mala calidad, elementos de seguridad mal imitados."
+            }
+        ];
+
+        let currentBillIndex = 0;
+        let score = 0;
+        let correctAnswers = 0;
+        let gameActive = true;
+
+        function initBillGame() {
+            currentBillIndex = 0;
+            score = 0;
+            correctAnswers = 0;
+            gameActive = true;
+            
+            document.getElementById('score').textContent = score;
+            document.getElementById('correct').textContent = correctAnswers;
+            document.getElementById('round').textContent = `1/${bills.length}`;
+            
+            showBill();
+            
+            document.getElementById('btnTrue').style.display = 'inline-block';
+            document.getElementById('btnFalse').style.display = 'inline-block';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('resultFeedback').style.display = 'none';
+            document.getElementById('gameHint').style.display = 'none';
+        }
+
+        function showBill() {
+            const bill = bills[currentBillIndex];
+            document.getElementById('billImage').src = bill.image;
+            document.getElementById('round').textContent = `${currentBillIndex + 1}/${bills.length}`;
+        }
+
+        function checkBillAnswer(userAnswer) {
+            if (!gameActive) return;
+            
+            const bill = bills[currentBillIndex];
+            const isCorrect = userAnswer === bill.isReal;
+            
+            const resultElement = document.getElementById('resultFeedback');
+            const hintElement = document.getElementById('gameHint');
+            
+            if (isCorrect) {
+                resultElement.textContent = '¡Correcto! Has identificado bien el billete.';
+                resultElement.className = 'result-feedback correct';
+                score += 10;
+                correctAnswers++;
+            } else {
+                resultElement.textContent = 'Incorrecto. Revisa los elementos de seguridad:';
+                resultElement.className = 'result-feedback incorrect';
+            }
+            
+            hintElement.textContent = bill.hint;
+            
+            resultElement.style.display = 'block';
+            hintElement.style.display = 'block';
+            
+            document.getElementById('score').textContent = score;
+            document.getElementById('correct').textContent = correctAnswers;
+            
+            document.getElementById('btnTrue').style.display = 'none';
+            document.getElementById('btnFalse').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            
+            gameActive = false;
+        }
+
+        function nextBill() {
+            currentBillIndex++;
+            
+            if (currentBillIndex < bills.length) {
+                showBill();
+                document.getElementById('btnTrue').style.display = 'inline-block';
+                document.getElementById('btnFalse').style.display = 'inline-block';
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('resultFeedback').style.display = 'none';
+                document.getElementById('gameHint').style.display = 'none';
+                gameActive = true;
+            } else {
+                const resultElement = document.getElementById('resultFeedback');
+                resultElement.textContent = 
+                    `¡Juego completado! Puntuación final: ${score}/${bills.length * 10}. 
+                    Acertaste ${correctAnswers} de ${bills.length} billetes.`;
+                resultElement.className = 'result-feedback correct';
+                resultElement.style.display = 'block';
+                document.getElementById('gameHint').style.display = 'none';
+                document.getElementById('nextBtn').textContent = 'Jugar de nuevo';
+                document.getElementById('nextBtn').onclick = initBillGame;
+            }
+        }
+
+        // ===== JUEGO DE ARQUEO DE CAJA =====
+        const cashRounds = [
+            { items: [100, 50, 20, 10, 5, 2, 1, 0.5, 0.2, 0.1], answer: 188.8 },
+            { items: [200, 100, 50, 20, 10, 5, 1, 0.5, 0.2], answer: 386.7 },
+            { items: [50, 20, 20, 10, 10, 5, 2, 1, 0.5], answer: 118.5 },
+            { items: [100, 100, 50, 20, 10, 5, 2, 1, 0.2, 0.1], answer: 288.3 },
+            { items: [20, 20, 10, 10, 5, 5, 2, 2, 1, 1], answer: 76 }
+        ];
+
+        let currentCashRound = 0;
+        let cashScore = 0;
+
+        function initCashGame() {
+            currentCashRound = 0;
+            cashScore = 0;
+            
+            document.getElementById('cashScore').textContent = cashScore;
+            document.getElementById('cashRound').textContent = `1/${cashRounds.length}`;
+            
+            showCashRound();
+        }
+
+        function showCashRound() {
+            const round = cashRounds[currentCashRound];
+            const cashItemsDiv = document.getElementById('cashItems');
+            cashItemsDiv.innerHTML = '';
+            
+            round.items.forEach((item, index) => {
+                const cashItem = document.createElement('div');
+                cashItem.className = 'cash-item';
+                cashItem.innerHTML = `
+                    <div>Elemento ${index + 1}:</div>
+                    <div>S/ ${item.toFixed(2)}</div>
+                `;
+                cashItemsDiv.appendChild(cashItem);
+            });
+            
+            document.getElementById('cashRound').textContent = `${currentCashRound + 1}/${cashRounds.length}`;
+            document.getElementById('totalValue').textContent = '0.00';
+            document.getElementById('cashResult').style.display = 'none';
+        }
+
+        function calculateTotal() {
+            const round = cashRounds[currentCashRound];
+            const total = round.items.reduce((sum, item) => sum + item, 0);
+            document.getElementById('totalValue').textContent = total.toFixed(2);
+        }
+
+        function checkCashAnswer() {
+            const round = cashRounds[currentCashRound];
+            const userTotal = parseFloat(document.getElementById('totalValue').textContent);
+            const isCorrect = Math.abs(userTotal - round.answer) < 0.1;
+            
+            const resultElement = document.getElementById('cashResult');
+            
+            if (isCorrect) {
+                resultElement.textContent = `¡Correcto! El total es S/ ${round.answer.toFixed(2)}`;
+                resultElement.className = 'result-feedback correct';
+                cashScore += 20;
+            } else {
+                resultElement.textContent = `Incorrecto. El total correcto es S/ ${round.answer.toFixed(2)}`;
+                resultElement.className = 'result-feedback incorrect';
+            }
+            
+            resultElement.style.display = 'block';
+            document.getElementById('cashScore').textContent = cashScore;
+            
+            setTimeout(() => {
+                currentCashRound++;
+                if (currentCashRound < cashRounds.length) {
+                    showCashRound();
+                } else {
+                    resultElement.textContent = `¡Juego completado! Puntuación final: ${cashScore}/${cashRounds.length * 20}`;
+                    resultElement.className = 'result-feedback correct';
+                }
+            }, 2000);
+        }
+
+        // ===== JUEGO DE PREVENCIÓN DE LAVADO DE ACTIVOS =====
+        const scenarios = [
+            {
+                text: "Un cliente quiere depositar S/ 45,000 en efectivo en pequeñas denominaciones, pero se muestra nervioso y evita hacer contacto visual.",
+                isSuspicious: true,
+                explanation: "Depósitos en efectivo de grandes cantidades, especialmente en denominaciones pequeñas, y comportamiento nervioso son señales de alerta."
+            },
+            {
+                text: "Una empresa legalmente constituida realiza una transferencia bancaria a otra empresa por servicios de consultoría.",
+                isSuspicious: false,
+                explanation: "Transacciones entre empresas por servicios documentados son operaciones normales y legítimas."
+            },
+            {
+                text: "Una persona realiza múltiples depósitos en efectivo de justo menos de S/ 10,000 en diferentes sucursales del mismo banco.",
+                isSuspicious: true,
+                explanation: "Dividir transacciones para evitar los reportes obligatorios (estructurar) es una técnica común de lavado de activos."
+            },
+            {
+                text: "Un cliente cambia frecuentemente grandes sumas de dinero a diferentes monedas extranjeras sin una razón comercial aparente.",
+                isSuspicious: true,
+                explanation: "El cambio frecuente de divisas sin justificación comercial puede indicar intentos de ocultar el origen del dinero."
+            },
+            {
+                text: "Un empleado recibe su salario mediante transferencia bancaria luego de trabajar un mes completo.",
+                isSuspicious: false,
+                explanation: "El pago de salarios mediante transferencia bancaria es una práctica comercial normal y legítima."
+            }
+        ];
+
+        let currentScenarioIndex = 0;
+        let launderingScore = 0;
+
+        function initLaunderingGame() {
+            currentScenarioIndex = 0;
+            launderingScore = 0;
+            
+            document.getElementById('launderingScore').textContent = launderingScore;
+            document.getElementById('launderingRound').textContent = `1/${scenarios.length}`;
+            
+            showScenario();
+            
+            // Actualizar barra de progreso
+            updateProgressBar();
+        }
+
+        function showScenario() {
+            const scenario = scenarios[currentScenarioIndex];
+            document.getElementById('scenarioText').textContent = scenario.text;
+            document.getElementById('launderingRound').textContent = `${currentScenarioIndex + 1}/${scenarios.length}`;
+            
+            document.getElementById('scenarioResult').style.display = 'none';
+            document.getElementById('scenarioExplanation').style.display = 'none';
+        }
+
+        function checkScenarioAnswer(userAnswer) {
+            const scenario = scenarios[currentScenarioIndex];
+            const isCorrect = userAnswer === scenario.isSuspicious;
+            
+            const resultElement = document.getElementById('scenarioResult');
+            const explanationElement = document.getElementById('scenarioExplanation');
+            
+            if (isCorrect) {
+                resultElement.textContent = '¡Correcto!';
+                resultElement.className = 'result-feedback correct';
+                launderingScore += 20;
+            } else {
+                resultElement.textContent = 'Incorrecto';
+                resultElement.className = 'result-feedback incorrect';
+            }
+            
+            explanationElement.textContent = scenario.explanation;
+            
+            resultElement.style.display = 'block';
+            explanationElement.style.display = 'block';
+            document.getElementById('launderingScore').textContent = launderingScore;
+            
+            setTimeout(() => {
+                currentScenarioIndex++;
+                if (currentScenarioIndex < scenarios.length) {
+                    showScenario();
+                    updateProgressBar();
+                } else {
+                    resultElement.textContent = `¡Juego completado! Puntuación final: ${launderingScore}/${scenarios.length * 20}`;
+                    resultElement.className = 'result-feedback correct';
+                }
+            }, 3000);
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentScenarioIndex + 1) / scenarios.length) * 100;
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${Math.round(progress)}%`;
+        }
+
+        // ===== FUNCIONES GENERALES =====
+        function showGame(gameId) {
+            // Ocultar todos los juegos
+            document.getElementById('billGame').style.display = 'none';
+            document.getElementById('cashGame').style.display = 'none';
+            document.getElementById('launderingGame').style.display = 'none';
+            
+            // Mostrar el juego seleccionado
+            document.getElementById(gameId).style.display = 'block';
+            
+            // Inicializar el juego
+            if (gameId === 'billGame') initBillGame();
+            if (gameId === 'cashGame') initCashGame();
+            if (gameId === 'launderingGame') initLaunderingGame();
+            
+            // Desplazar hacia la sección de juegos
+            document.getElementById('juegos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showLogin() {
+            alert('Funcionalidad de login en desarrollo. Por ahora, puede acceder directamente a los juegos.');
+        }
+        
+        function showRegister() {
+            alert('Funcionalidad de registro en desarrollo. Por ahora, puede acceder directamente a los juegos.');
+        }
+
+        // Inicializar la página con el juego de billetes visible
+        document.addEventListener('DOMContentLoaded', function() {
+            initBillGame();
+        });
+    </script>
 </body>
 </html>
